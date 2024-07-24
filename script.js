@@ -18,6 +18,21 @@ const authOptions = {
   }).toString()
 };   
 
+async function getArtistInfo(artistId) {
+  try {
+    const token = await getAccessToken();
+    const artistInfo = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log(artistInfo);
+  }
+  catch (error) {
+    console.error('ERROR NOOOOOO', error);
+  }
+}
+
 async function getAccessToken() {
   try {
     const response = await axios(authOptions);
@@ -27,11 +42,6 @@ async function getAccessToken() {
   }
 }
 
-async function main() {
-  const token = await getAccessToken();
-  if (token) {
-    console.log('Access Token:', token);
-  }
-}
+artistId = '0Y5tJX1MQlPlqiwlOH1tJY'; // will do something like better later
 
-main();
+getArtistInfo(artistId);

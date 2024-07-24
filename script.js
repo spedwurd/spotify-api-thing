@@ -1,4 +1,4 @@
-// chatgpt and stack overflow has ultimately become most of what i wrote here 😢
+var fs = require('fs');
 
 require('dotenv').config();
 const axios = require('axios');
@@ -42,6 +42,14 @@ async function getAccessToken() {
   }
 }
 
-artistId = '0Y5tJX1MQlPlqiwlOH1tJY'; // will do something like better later
+fs.readFile('data.json', 'utf8', (err, data) => {
+  if (err) {
+      console.error(err);
+      return;
+  }
 
-getArtistInfo(artistId);
+  var artists = JSON.parse(data);
+  console.log(artists)
+});
+
+getArtistInfo(); // doesnt work rn but i got the data so ill do smth next time

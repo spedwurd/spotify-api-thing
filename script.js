@@ -20,13 +20,18 @@ const authOptions = {
 
 async function getArtistInfo(artistId) {
   try {
-    const token = await getAccessToken();
+    const token = "BQDiRtbJh0FlKZvTpX6vFj9h4xjpjKSQJBPzcDIiyQh-hoAs0zBBC1BmozMHXcGVZL5UJGRRo8FYCxlBCQ4yEgbvYH1SDiJoUriVTyD6MffvIkgg9j0";
     const artistInfo = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, {
+      method: "GET",
       headers: {
+        'Content-Type': "application/json",
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log(artistInfo);
+    artistInfo.then(data => {
+      console.log(artistInfo);
+    })
+    return artistInfo;
   }
   catch (error) {
     console.error('ERROR NOOOOOO', error);
@@ -36,6 +41,7 @@ async function getArtistInfo(artistId) {
 async function getAccessToken() {
   try {
     const response = await axios(authOptions);
+    console.log(response.data.access_token);
     return response.data.access_token;
   } catch (error) {
     console.error('Error fetching access token:', error.response);
@@ -49,7 +55,15 @@ fs.readFile('data.json', 'utf8', (err, data) => {
   }
 
   var artists = JSON.parse(data);
-  console.log(artists)
+  option_a = artists[Math.floor(Math.random() * 2499)];
+  option_b = artists[Math.floor(Math.random() * 2499)];
+  if (option_a == option_b) {
+    while (option_a == option_b) {
+      option_b = artists[Math.floor(Math.random() * 2499)];
+    }
+   }
+  console.log(getArtistInfo(option_a));
+  console.log(getArtistInfo(option_b));
 });
 
-getArtistInfo(); // doesnt work rn but i got the data so ill do smth next time
+getArtistInfo("0IROOdQ2fQUcoaEPqt1Isg"); // doesnt work rn but i got the data so ill do smth next time

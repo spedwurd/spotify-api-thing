@@ -11,11 +11,11 @@ response = requests.get(url, timeout=5)
 html_content = response.text
 content = BeautifulSoup(html_content, 'html.parser').findAll("a")
 
-artists = {}
+artist_ids = []
 
 for artist in content:
-  artists[artist.text] = artist['href'][7:29]
+  artist_ids.append(artist['href'][7:29])
 
 with open('data.json', 'w') as json_file:
-  json.dump(artists, json_file)
+  json.dump(artist_ids, json_file)
 

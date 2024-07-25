@@ -2,6 +2,7 @@ var fs = require('fs');
 
 require('dotenv').config();
 const axios = require('axios');
+const { get } = require('http');
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -20,18 +21,16 @@ const authOptions = {
 
 async function getArtistInfo(artistId) {
   try {
-    const token = "BQDiRtbJh0FlKZvTpX6vFj9h4xjpjKSQJBPzcDIiyQh-hoAs0zBBC1BmozMHXcGVZL5UJGRRo8FYCxlBCQ4yEgbvYH1SDiJoUriVTyD6MffvIkgg9j0";
+    const token = "BQBBk2qm99kJA_ooy4QhB7pRWTtTPN_i1iU5SFMp-GOiG-h9yIFACGxvs7CEbR4yfHue0Rtg0BhRS5CvHJS5hi5yB_mtPehePhTtwLFfdEKwjxhRbFs";
     const artistInfo = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, {
-      method: "GET",
       headers: {
         'Content-Type': "application/json",
         'Authorization': `Bearer ${token}`
       }
     });
-    artistInfo.then(data => {
-      console.log(artistInfo);
-    })
-    return artistInfo;
+    const x = artistInfo.data;
+//    console.log(x);
+    return x;
   }
   catch (error) {
     console.error('ERROR NOOOOOO', error);
@@ -48,22 +47,32 @@ async function getAccessToken() {
   }
 }
 
-fs.readFile('data.json', 'utf8', (err, data) => {
+fs.readFile('data.json', 'utf8', async (err, data) => {
   if (err) {
       console.error(err);
       return;
   }
-
+  try {
   var artists = JSON.parse(data);
-  option_a = artists[Math.floor(Math.random() * 2499)];
-  option_b = artists[Math.floor(Math.random() * 2499)];
+  let option_a = artists[Math.floor(Math.random() * 2499)];
+  let option_b = artists[Math.floor(Math.random() * 2499)];
   if (option_a == option_b) {
     while (option_a == option_b) {
       option_b = artists[Math.floor(Math.random() * 2499)];
     }
    }
-  console.log(getArtistInfo(option_a));
-  console.log(getArtistInfo(option_b));
+  const a = await getArtistInfo(option_a);
+  const b = await getArtistInfo(option_b);
+  const higher = (a.followers.total>b.followers.total)*0 + (b.followers.total>a.followers.total)*1;
+
+  } catch (error) {
+    console.error('error', error.message);
+  }
+ 
 });
 
-getArtistInfo("0IROOdQ2fQUcoaEPqt1Isg"); // doesnt work rn but i got the data so ill do smth next time
+/*
+lol no clue why i cant do html stuff now but im kinda stupid so its prob smth
+console.log('hi');
+document.getElementById('artist-one-follows').innerHTML = 'hi';
+*/

@@ -3,12 +3,13 @@ var fs = require('fs');
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const port = 3000;
 const axios = require('axios');
 const { get } = require('http');
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
+const port = process.env.PORT;
+const url = process.env.URL;
 
 const authOptions = {
   method: 'POST',
@@ -47,47 +48,42 @@ async function getAccessToken() {
     console.error('Error fetching access token:', error.response);
   }
 }
-fs.readFile('data.json', 'utf8', async (err, data) => {
-  if (err) {
-      console.error(err);
-      return;
-  }
+fs.readFile('data.json', 'utf8', (err, data) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    artists = JSON.parse(data);
+    console.log(artists);
+  });
+
+
+async function getResults() {
   try {
-  var artists = JSON.parse(data);
-  let option_a = artists[Math.floor(Math.random() * 2499)];
-  let option_b = artists[Math.floor(Math.random() * 2499)];
-  if (option_a == option_b) {
+    var option_a = artists[Math.floor(Math.random() * 2499)], option_b = artists[Math.floor(Math.random() * 2499)];
     while (option_a == option_b) {
       option_b = artists[Math.floor(Math.random() * 2499)];
     }
-   }
-  const a = await getArtistInfo(option_a);
-  const b = await getArtistInfo(option_b);
-  const higher = (a.followers.total>b.followers.total)*0 + (b.followers.total>a.followers.total)*1;
-
-  } catch (error) {
-    console.error('error', error.message);
+    var a = await getArtistInfo(option_a), b = await getArtistInfo(option_b);
+    var higher = (a.followers.total>b.followers.total)*0 + (b.followers.total>a.followers.total)*1;
+    return [a, b, higher];
   }
-
-});
-
+  catch (error) {
+    console.error('ERRORRRR', error);
+  }
+}
 // god bless stack overflow for this shit idk wtf express is doing rn 😭
-app.get('/api/artist/', (req, res) => {
-  res.json({ message: 'AHHHHHHHH'});
+const cors = require('cors');
+app.use(cors({
+  origin: url
+}));
+
+app.get('/artist/', async (req, res) => {
+  info = await getResults();
+  console.log(info);
+  res.json({'message': 'it worked!', 'artist_one': info[0], 'artist_two': info[1], 'answer': info[2]});
 });
 
 app.listen(port, () => {
   console.log(`Backend running on port ${port}`);
 });
-
-const cors = require('cors');
-app.use(cors({
-  origin: '' // you arent seeing this
-}));
-
-
-/*
-lol no clue why i cant do html stuff now but im kinda stupid so its prob smth
-console.log('hi');
-document.getElementById('artist-one-follows').innerHTML = 'hi';
-*/

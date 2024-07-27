@@ -41,9 +41,12 @@ async function getArtistInfo(artistId) {
 }
 async function getAccessToken() {
   try {
+    /*
     const response = await axios(authOptions);
     console.log(response.data.access_token);
     return response.data.access_token;
+    */
+    return 'BQBlVBh1eXOCQlDEEj5TUp_AOlm45MfjYYaMcYK5vN1ahY3K7_TWUoUVt-dq8KwkzdD_4hRiTWouwWAaZ5V6An2Zx5qxfpOIqpPH6wHtyqtpAKpKG7M';
   } catch (error) {
     console.error('Error fetching access token:', error.response);
   }
@@ -80,7 +83,7 @@ app.use(cors({
 
 app.get('/artist/', async (req, res) => {
   info = await getResults();
-  console.log(info);
+  console.log(info[0].images);
   res.json({'message': 'it worked!', 'artist_one': info[0], 'artist_two': info[1], 'answer': info[2]});
 });
 

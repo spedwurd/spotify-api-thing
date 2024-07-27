@@ -1,0 +1,41 @@
+h1 {
+    margin: auto;
+    text-align: center;
+}
+
+button {
+    width: 5%;
+    height: 30px;
+    border-radius: 10px;
+}
+
+#score {
+    font-size: 5rem;
+}
+
+#artist-images {
+    display: flex;
+    justify-content: space-between;
+}
+
+#artist-images > img {
+    width: 300px;
+    height: 300px;
+}
+
+#artist-names {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#artist-followers {
+    display: flex;
+    justify-content: space-between;
+}
+
+#start-game {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}

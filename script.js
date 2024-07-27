@@ -1,7 +1,11 @@
-document.getElementById('artist-one-follows').innerHTML = 'hi';
+var fs = require('fs');
 
-// const clientId = process.env.CLIENT_ID (import from json now)
-// const clientSecret = process.env.CLIENT_SECRET; (import from json now)
+require('dotenv').config();
+const axios = require('axios');
+const { get } = require('http');
+
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 const authOptions = {
   method: 'POST',
@@ -17,38 +21,29 @@ const authOptions = {
 
 async function getArtistInfo(artistId) {
   try {
-    const token = "BQBBk2qm99kJA_ooy4QhB7pRWTtTPN_i1iU5SFMp-GOiG-h9yIFACGxvs7CEbR4yfHue0Rtg0BhRS5CvHJS5hi5yB_mtPehePhTtwLFfdEKwjxhRbFs";
-    /*
-    CHANGE TO FETCH()
+    const token = await getAccessToken();
     const artistInfo = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, {
       headers: {
-        'Content-Type': "application/json",
         'Authorization': `Bearer ${token}`
       }
     });
-    */
     const x = artistInfo.data;
+//    console.log(x);
     return x;
   }
   catch (error) {
     console.error('ERROR NOOOOOO', error);
   }
 }
-
 async function getAccessToken() {
   try {
-    /*
-    CHANGE TO FETCH
     const response = await axios(authOptions);
-    */
     console.log(response.data.access_token);
     return response.data.access_token;
   } catch (error) {
     console.error('Error fetching access token:', error.response);
   }
 }
-/*
-CHANGE FILE READING THING SHIT
 fs.readFile('data.json', 'utf8', async (err, data) => {
   if (err) {
       console.error(err);
@@ -65,13 +60,22 @@ fs.readFile('data.json', 'utf8', async (err, data) => {
    }
   const a = await getArtistInfo(option_a);
   const b = await getArtistInfo(option_b);
+
+  console.log(a)
+
   const higher = (a.followers.total>b.followers.total)*0 + (b.followers.total>a.followers.total)*1;
+  console.log(a);
+  console.log(b);
+  console.log(higher);
 
   } catch (error) {
     console.error('error', error.message);
   }
- 
-});
-*/
 
-console.log('man what the sigma is going on')
+});
+
+/*
+lol no clue why i cant do html stuff now but im kinda stupid so its prob smth
+console.log('hi');
+document.getElementById('artist-one-follows').innerHTML = 'hi';
+*/

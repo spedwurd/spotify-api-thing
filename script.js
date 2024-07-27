@@ -60,13 +60,7 @@ fs.readFile('data.json', 'utf8', async (err, data) => {
    }
   const a = await getArtistInfo(option_a);
   const b = await getArtistInfo(option_b);
-
-  console.log(a)
-
   const higher = (a.followers.total>b.followers.total)*0 + (b.followers.total>a.followers.total)*1;
-  console.log(a);
-  console.log(b);
-  console.log(higher);
 
   } catch (error) {
     console.error('error', error.message);

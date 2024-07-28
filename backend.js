@@ -11,6 +11,9 @@ const clientSecret = process.env.CLIENT_SECRET;
 const port = process.env.PORT;
 const url = process.env.URL;
 
+var hasToken = false;
+var t = '';
+
 const authOptions = {
   method: 'POST',
   url: 'https://accounts.spotify.com/api/token',
@@ -41,12 +44,14 @@ async function getArtistInfo(artistId) {
 }
 async function getAccessToken() {
   try {
-    /*
+    if (hasToken) {
+      return t;
+    }
     const response = await axios(authOptions);
     console.log(response.data.access_token);
-    return response.data.access_token;
-    */
-    return 'BQBVzQQ2ssSQtz2IUcVu-NYKSlbIp7fPriaK45yrxa7PrxFZlSyrOh6twC752t6tpxTlrNnBmp2BeJyOMDIXYZk7WOtV6llUA6xbFLS-0l6u7aBGrWM';
+    t = response.data.access_token;
+    hasToken = true;
+    return t;
   } catch (error) {
     console.error('Error fetching access token:', error.response);
   }

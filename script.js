@@ -1,5 +1,12 @@
 lost = false;
 
+function formatNumber() {
+  const f = document.getElementById('artist-two-followers');
+  const numValue = getComputedStyle(f).getPropertyValue('--num').trim();
+  const formattedNum = Number(numValue).toLocaleString();
+  f.content = counter(formattedNumber);
+}
+
 function cursorMoved(event) {
   let x = event.clientX;
   let y = event.clientY;
@@ -16,6 +23,7 @@ function cursorMoved(event) {
 
 document.getElementById('start-game').addEventListener('click', async () => { 
     try {
+      document.getElementById('artist-two-followers').style.setProperty('--num', 0);
       lost = false;
       document.getElementById('has_failed').innerHTML = '';
       document.getElementById('has_failed').style.border = '';
@@ -24,7 +32,7 @@ document.getElementById('start-game').addEventListener('click', async () => {
       data = await response.json();
       skibidi();
       document.getElementById('score').innerHTML = 'SCORE: ' + score;
-      document.getElementById('artist-two-followers').innerHTML = "how many followers?";
+      document.getElementById('artist-two-followers').innerHTML = "how many followers?: ";
 
     } catch (error) {
       console.error('Error fetching artist info:', error);
@@ -35,6 +43,13 @@ document.getElementById('start-game').addEventListener('click', async () => {
     if (data.answer == a && lost != true) {
       score += 1;
       document.getElementById('score').innerHTML = 'SCORE: ' + score;
+      followers_reveal = document.getElementById('artist-two-followers');
+      followers_reveal.style.setProperty('--num', data.artist_two.followers.total);
+      await new Promise(r => setTimeout(r, 1500));
+      document.getElementById('artist-two-followers').addEventListener('transitionend', formatNumber);
+      await new Promise(r => setTimeout(r, 1500));
+
+      followers_reveal.style.setProperty('--num', 0);
       console.log('correct!');
       response = await fetch(`http://localhost:3000/artist`);
       temp_data = await response.json();
@@ -52,7 +67,8 @@ document.getElementById('start-game').addEventListener('click', async () => {
       
       document.getElementById('has_failed').style.border = "3px solid black";
       document.getElementById('has_failed').innerHTML = 'oops! you lost.'
-      document.getElementById('artist-two-followers').innerHTML = data.artist_two.followers.total.toLocaleString() + ' followers';
+      document.getElementById('artist-two-followers').style.setProperty('--num', data.artist_two.followers.total);
+      await new Promise(r => setTimeout(r, 1500));
       lost = true;
     }
   }
@@ -74,5 +90,4 @@ document.getElementById('start-game').addEventListener('click', async () => {
       image_two.classList.remove('fade')
     })
     document.getElementById('artist-one-followers').innerHTML = data.artist_one.followers.total.toLocaleString() + ' followers';
-    document.getElementById('artist-two-followers').innerHTML = 'how many followers?';
   }

@@ -46,7 +46,7 @@ async function getAccessToken() {
     console.log(response.data.access_token);
     return response.data.access_token;
     */
-    return 'BQAtQNi5YQVLH2x_5t9scgd1LJEShBJFuoNxgf-wl4JIie2NCdQJARy5924kGQFEpPA23N1C7RBg_CmzXapDpk8sxH19C40NYVDctR6dbvRxth1D1jo';
+    return 'BQAuiVpc_uuQo-g5Q8mybmOA_QtmZT8s4Yy3zjWphLibQxIrpRo_06Ql-hN9ChEL1XUc43M4mEkUxwPqUWZgYCxxwys6zhy_m6WDM87j2TMK19jgDWU';
   } catch (error) {
     console.error('Error fetching access token:', error.response);
   }
@@ -68,15 +68,13 @@ async function getResults() {
       option_b = artists[Math.floor(Math.random() * 2499)];
     }
     var a = await getArtistInfo(option_a), b = await getArtistInfo(option_b);
-    var higher = (a.followers.total>b.followers.total)*0 + (b.followers.total>a.followers.total)*1;
+    var higher = (b.followers.total>a.followers.total)*0 + (a.followers.total>b.followers.total)*1;
     return [a, b, higher];
   }
   catch (error) {
     console.error('ERRORRRR', error);
   }
 }
-
-console.log(getAccessToken());
 
 // god bless stack overflow for this shit idk wtf express is doing rn 😭
 const cors = require('cors');
@@ -88,6 +86,11 @@ app.get('/artist/', async (req, res) => {
   info = await getResults();
   res.json({'message': 'it worked!', 'artist_one': info[0], 'artist_two': info[1], 'answer': info[2]});
 });
+
+app.get('/artist/continue', async (req, res) => {
+  info = await getResults();
+  res.json({'message': 'it worked!', 'new_artist': info[0]});
+})
 
 app.listen(port, () => {
   console.log(`Backend running on port ${port}`);

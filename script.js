@@ -8,8 +8,8 @@ document.getElementById('start-game').addEventListener('click', async () => {
       document.getElementById('artist-two-name').innerHTML = data.artist_two.name;
       document.getElementById('artist-one-image').src = data.artist_one.images[0].url;
       document.getElementById('artist-two-image').src = data.artist_two.images[0].url;
-      document.getElementById('artist-one-followers').innerHTML = data.artist_one.followers.total;
-      document.getElementById('artist-two-followers').innerHTML = "hmm what is it";
+      document.getElementById('artist-one-followers').innerHTML = data.artist_one.followers.total.toLocaleString() + ' followers';
+      document.getElementById('artist-two-followers').innerHTML = "how many followers?";
       document.getElementById('answer').innerHTML = data.answer;
     } catch (error) {
       console.error('Error fetching artist info:', error);

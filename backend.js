@@ -46,12 +46,12 @@ async function getAccessToken() {
     console.log(response.data.access_token);
     return response.data.access_token;
     */
-    return 'BQBlVBh1eXOCQlDEEj5TUp_AOlm45MfjYYaMcYK5vN1ahY3K7_TWUoUVt-dq8KwkzdD_4hRiTWouwWAaZ5V6An2Zx5qxfpOIqpPH6wHtyqtpAKpKG7M';
+    return 'BQAtQNi5YQVLH2x_5t9scgd1LJEShBJFuoNxgf-wl4JIie2NCdQJARy5924kGQFEpPA23N1C7RBg_CmzXapDpk8sxH19C40NYVDctR6dbvRxth1D1jo';
   } catch (error) {
     console.error('Error fetching access token:', error.response);
   }
 }
-fs.readFile('data.json', 'utf8', (err, data) => {
+fs.readFile('assets/data.json', 'utf8', (err, data) => {
     if (err) {
         console.error(err);
         return;
@@ -75,6 +75,9 @@ async function getResults() {
     console.error('ERRORRRR', error);
   }
 }
+
+console.log(getAccessToken());
+
 // god bless stack overflow for this shit idk wtf express is doing rn 😭
 const cors = require('cors');
 app.use(cors({
@@ -83,7 +86,6 @@ app.use(cors({
 
 app.get('/artist/', async (req, res) => {
   info = await getResults();
-  console.log(info[0].images);
   res.json({'message': 'it worked!', 'artist_one': info[0], 'artist_two': info[1], 'answer': info[2]});
 });
 

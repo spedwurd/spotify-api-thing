@@ -1,41 +1,61 @@
+@font-face {
+    font-family: 'Recoleta';
+    src: url('/assets/recoleta-font.otf');
+}
+
+* {
+    font-family: 'Recoleta';
+}
+
 h1 {
     margin: auto;
     text-align: center;
 }
 
 button {
-    width: 5%;
+    width: 80px;
     height: 30px;
     border-radius: 10px;
 }
 
+.game-container {
+    margin: 0 auto;
+    width: 80%;
+    background-color: lightgray;
+    padding: 100px;
+}
+
+#artist-one, #artist-two {
+    text-align: center;
+    background-color: skyblue;
+    padding: 50px 20px 50px 20px;
+    border-radius: 100px;
+    border: 3px solid black;
+}
+
+#scoreboard {
+    padding-top: 50px;
+    text-align: center;
+}
+
 #score {
-    font-size: 5rem;
+    font-size: 3rem;
 }
 
-#artist-images {
+#real-game {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
-#artist-images > img {
+#real-game img {
     width: 300px;
     height: 300px;
-}
-
-#artist-names {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-#artist-followers {
-    display: flex;
-    justify-content: space-between;
+    border-radius: 100px;
 }
 
 #start-game {
     margin: auto;
     display: flex;
     justify-content: center;
+    align-items: center;
 }

@@ -46,7 +46,7 @@ async function getAccessToken() {
     console.log(response.data.access_token);
     return response.data.access_token;
     */
-    return 'BQAuiVpc_uuQo-g5Q8mybmOA_QtmZT8s4Yy3zjWphLibQxIrpRo_06Ql-hN9ChEL1XUc43M4mEkUxwPqUWZgYCxxwys6zhy_m6WDM87j2TMK19jgDWU';
+    return 'BQBIxeQCNpnp81EBT6F9oi7vN7KuXEe06MLkBzStc1tCjrKAFsw_mU24SDAd6ca9WGGCa3vAoTjklnPqjLz1kdnUcWRXinPpnyy9ySq0R5R47UhnWs8';
   } catch (error) {
     console.error('Error fetching access token:', error.response);
   }
@@ -57,7 +57,6 @@ fs.readFile('assets/data.json', 'utf8', (err, data) => {
         return;
     }
     artists = JSON.parse(data);
-    console.log(artists);
   });
 
 

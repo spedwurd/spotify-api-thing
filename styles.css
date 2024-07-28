@@ -5,6 +5,16 @@
 
 * {
     font-family: 'Recoleta';
+    cursor: url('/assets/cursor.png') 40 50, auto;
+}
+
+#cursor {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: 1px black solid;
+    transition: 'transform' 1s ease-out;
 }
 
 h1 {
@@ -51,6 +61,7 @@ button {
     width: 300px;
     height: 300px;
     border-radius: 100px;
+    border: 3px solid white;
 }
 
 #start-game {

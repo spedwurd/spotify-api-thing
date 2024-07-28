@@ -1,5 +1,15 @@
 lost = false;
 
+function cursorMoved(event) {
+  let x = event.clientX;
+  let y = event.clientY;
+
+  const cursorInfo = document.getElementById('cursor');
+  cursorInfo.style.top = y-8 + 'px';
+  cursorInfo.style.left = x+6.5 + 'px'
+  cursorInfo.style.transform = `translate(${clientX}px, ${clientY}px)`;
+}
+
 document.getElementById('start-game').addEventListener('click', async () => { 
     try {
       lost = false;

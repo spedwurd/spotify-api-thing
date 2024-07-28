@@ -6,13 +6,13 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="styles.css">
     </head>
-
-    <body>
+    <div id="cursor"></div>
+    <body id="body" onmousemove="setTimeout(cursorMoved(event), 1000)">
         <h1>spotify higher or lower game</h1>
         <div class="game-container">
             <div id="real-game">
                 <div id="artist-one">
-                    <img id="artist-one-image"  src="" alt="image">
+                    <img id="artist-one-image"  src="/assets/black.png" alt="image">
                     <p id="artist-one-name"></p>
                     <p id="artist-one-followers"></p>
                 </div>
@@ -25,7 +25,7 @@
                     <button id="lower" onclick="eval(1)">LOWER</button>
                 </div>
                 <div id="artist-two">
-                    <img id="artist-two-image"  src="" alt="image">
+                    <img id="artist-two-image"  src="/assets/black.png" alt="image">
                     <p id="artist-two-name"></p>
                     <p id="artist-two-followers"></p>
                 </div>

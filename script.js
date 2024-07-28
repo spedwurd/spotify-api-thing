@@ -5,15 +5,20 @@ function cursorMoved(event) {
   let y = event.clientY;
 
   const cursorInfo = document.getElementById('cursor');
-  cursorInfo.style.top = y-8 + 'px';
-  cursorInfo.style.left = x+6.5 + 'px'
-  cursorInfo.style.transform = `translate(${clientX}px, ${clientY}px)`;
+  cursorInfo.style.top = y-6 + 'px';
+  cursorInfo.style.left = x-4 + 'px';
+
+  const cursorOutlineInfo = document.getElementById('cursor_outline');
+  cursorOutlineInfo.style.top = y-15 + 'px';
+  cursorOutlineInfo.style.left = x-11.5 + 'px'
+  cursorOutlineInfo.style.transform = `translate(${clientX}px, ${clientY}px)`;
 }
 
 document.getElementById('start-game').addEventListener('click', async () => { 
     try {
       lost = false;
       document.getElementById('has_failed').innerHTML = '';
+      document.getElementById('has_failed').style.border = '';
       response = await fetch(`http://localhost:3000/artist`);
       score = 0;
       data = await response.json();
@@ -39,6 +44,13 @@ document.getElementById('start-game').addEventListener('click', async () => {
       skibidi();
     }
     else {
+      let elem = document.getElementById('body');
+      elem.classList.add('flash');
+      elem.addEventListener('animationend', () => {
+        elem.classList.remove('flash');
+      })
+      
+      document.getElementById('has_failed').style.border = "3px solid black";
       document.getElementById('has_failed').innerHTML = 'oops! you lost.'
       document.getElementById('artist-two-followers').innerHTML = data.artist_two.followers.total.toLocaleString() + ' followers';
       lost = true;
@@ -47,8 +59,20 @@ document.getElementById('start-game').addEventListener('click', async () => {
   async function skibidi() {
     document.getElementById('artist-one-name').innerHTML = data.artist_one.name;
     document.getElementById('artist-two-name').innerHTML = data.artist_two.name;
-    document.getElementById('artist-one-image').src = data.artist_one.images[0].url;
-    document.getElementById('artist-two-image').src = data.artist_two.images[0].url;
+    let image_one = document.getElementById('artist-one-image');
+    let image_two= document.getElementById('artist-two-image');
+    image_one.src = data.artist_one.images[0].url;
+    image_two.src = data.artist_two.images[0].url;
+
+    image_one.classList.add('fade');
+    image_one.addEventListener('animationend', () => {
+      image_one.classList.remove('fade')
+    })
+
+    image_two.classList.add('fade');
+    image_two.addEventListener('animationend', () => {
+      image_two.classList.remove('fade')
+    })
     document.getElementById('artist-one-followers').innerHTML = data.artist_one.followers.total.toLocaleString() + ' followers';
     document.getElementById('artist-two-followers').innerHTML = 'how many followers?';
   }

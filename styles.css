@@ -3,9 +3,52 @@
     src: url('/assets/recoleta-font.otf');
 }
 
+@keyframes lostGameFlash {
+    0% {
+        background-color: aqua;
+    }
+    50% {
+        background-color: pink;
+    }
+    100% {
+        background-color: aqua;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.flash {
+    animation: lostGameFlash 0.25s ease;
+}
+
+.fade {
+    animation: fadeIn 0.5s ease;
+}
+
 * {
     font-family: 'Recoleta';
-    cursor: url('/assets/cursor.png') 40 50, auto;
+    cursor: none;
+}
+
+body {
+    background-color: aqua;
+}
+
+#cursor_outline {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 1px hotpink solid;
+    transition: all 200ms ease-out;
+    pointer-events: none;
 }
 
 #cursor {
@@ -13,8 +56,12 @@
     height: 15px;
     width: 15px;
     border-radius: 50%;
-    border: 1px black solid;
-    transition: 'transform' 1s ease-out;
+    background-color: lightskyblue;
+    pointer-events: none;
+}
+
+#cursor:active {
+    background-color: bisque;
 }
 
 h1 {
@@ -28,11 +75,25 @@ button {
     border-radius: 10px;
 }
 
+#cool_line {
+    width: 100%;
+    height: 1px;
+    margin: 25px 0;
+    background-color: black;
+}
+
+#has_failed {
+    padding: 3px;
+    font-size: 4rem;
+}
+
 .game-container {
     margin: 0 auto;
     width: 80%;
     background-color: lightgray;
     padding: 100px;
+    border-radius: 50px;
+    border: 1px solid black;
 }
 
 #artist-one, #artist-two {
@@ -66,6 +127,7 @@ button {
 
 #start-game {
     margin: auto;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;

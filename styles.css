@@ -32,19 +32,11 @@
 
 #artist-two-followers {
     transition: --num 1s;
-    counter-set: num var(--num);
+    counter-reset: num var(--num);
 }
 
 #artist-two-followers::after {
     content: counter(num);
-}
-
-.flash {
-    animation: lostGameFlash 0.25s ease;
-}
-
-.fade {
-    animation: fadeIn 0.5s ease;
 }
 
 * {
@@ -54,6 +46,25 @@
 
 body {
     background-color: aqua;
+}
+
+h1 {
+    margin: auto;
+    text-align: center;
+}
+
+button {
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.flash {
+    animation: lostGameFlash 0.25s ease;
+}
+
+.fade {
+    animation: fadeIn 0.5s ease;
 }
 
 #cursor_outline {
@@ -77,29 +88,6 @@ body {
 
 #cursor:active {
     background-color: bisque;
-}
-
-h1 {
-    margin: auto;
-    text-align: center;
-}
-
-button {
-    width: 80px;
-    height: 30px;
-    border-radius: 10px;
-}
-
-#cool_line {
-    width: 100%;
-    height: 1px;
-    margin: 25px 0;
-    background-color: black;
-}
-
-#has_failed {
-    padding: 3px;
-    font-size: 4rem;
 }
 
 .game-container {
@@ -146,4 +134,16 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#cool_line {
+    width: 100%;
+    height: 1px;
+    margin: 25px 0;
+    background-color: black;
+}
+
+#has_failed {
+    padding: 3px;
+    font-size: 4rem;
 }

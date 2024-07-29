@@ -1,12 +1,5 @@
 lost = false;
 
-function formatNumber() {
-  const f = document.getElementById('artist-two-followers');
-  const numValue = getComputedStyle(f).getPropertyValue('--num').trim();
-  const formattedNum = Number(numValue).toLocaleString();
-  f.content = counter(formattedNumber);
-}
-
 function cursorMoved(event) {
   let x = event.clientX;
   let y = event.clientY;
@@ -23,17 +16,16 @@ function cursorMoved(event) {
 
 document.getElementById('start-game').addEventListener('click', async () => { 
     try {
-      document.getElementById('artist-two-followers').style.setProperty('--num', 0);
       lost = false;
+      score = 0;
+      document.getElementById('artist-two-followers').style.setProperty('--num', 0);
       document.getElementById('has_failed').innerHTML = '';
       document.getElementById('has_failed').style.border = '';
-      response = await fetch(`http://localhost:3000/artist`);
-      score = 0;
-      data = await response.json();
-      skibidi();
       document.getElementById('score').innerHTML = 'SCORE: ' + score;
       document.getElementById('artist-two-followers').innerHTML = "how many followers?: ";
-
+      response = await fetch(`http://localhost:3000/artist`);
+      data = await response.json();
+      refreshArtists();
     } catch (error) {
       console.error('Error fetching artist info:', error);
     }
@@ -43,20 +35,18 @@ document.getElementById('start-game').addEventListener('click', async () => {
     if (data.answer == a && lost != true) {
       score += 1;
       document.getElementById('score').innerHTML = 'SCORE: ' + score;
+
       followers_reveal = document.getElementById('artist-two-followers');
       followers_reveal.style.setProperty('--num', data.artist_two.followers.total);
       await new Promise(r => setTimeout(r, 1500));
-      document.getElementById('artist-two-followers').addEventListener('transitionend', formatNumber);
-      await new Promise(r => setTimeout(r, 1500));
-
       followers_reveal.style.setProperty('--num', 0);
-      console.log('correct!');
+
       response = await fetch(`http://localhost:3000/artist`);
       temp_data = await response.json();
       data.artist_one = data.artist_two;
       data.artist_two = temp_data.artist_one;
       data.answer = (data.artist_one.followers.total>data.artist_two.followers.total)*1 + (data.artist_two.followers.total>data.artist_one.followers.total)*0;
-      skibidi();
+      refreshArtists();
     }
     else {
       let elem = document.getElementById('body');
@@ -72,11 +62,11 @@ document.getElementById('start-game').addEventListener('click', async () => {
       lost = true;
     }
   }
-  async function skibidi() {
+  async function refreshArtists() {
     document.getElementById('artist-one-name').innerHTML = data.artist_one.name;
     document.getElementById('artist-two-name').innerHTML = data.artist_two.name;
     let image_one = document.getElementById('artist-one-image');
-    let image_two= document.getElementById('artist-two-image');
+    let image_two = document.getElementById('artist-two-image');
     image_one.src = data.artist_one.images[0].url;
     image_two.src = data.artist_two.images[0].url;
 

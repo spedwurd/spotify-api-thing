@@ -26,7 +26,7 @@ const authOptions = {
   }).toString()
 };   
 
-async function getArtistInfo(artistId) {
+async function getArtistInfo(artistId) { // gets api artist info using token
   try {
     const token = await getAccessToken();
     const artistInfo = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, {
@@ -35,7 +35,6 @@ async function getArtistInfo(artistId) {
       }
     });
     const x = artistInfo.data;
-//    console.log(x);
     return x;
   }
   catch (error) {
@@ -44,19 +43,19 @@ async function getArtistInfo(artistId) {
 }
 async function getAccessToken() {
   try {
-    if (hasToken) {
+    if (hasToken) { // if already generated token during session, rereturn
       return t;
     }
-    const response = await axios(authOptions);
+    const response = await axios(authOptions); // otherwise get a new one 
     console.log(response.data.access_token);
     t = response.data.access_token;
-    hasToken = true;
+    hasToken = true; // says we have one
     return t;
   } catch (error) {
     console.error('Error fetching access token:', error.response);
   }
 }
-fs.readFile('assets/data.json', 'utf8', (err, data) => {
+fs.readFile('assets/data.json', 'utf8', (err, data) => { // gets artist ids
     if (err) {
         console.error(err);
         return;
@@ -68,11 +67,11 @@ fs.readFile('assets/data.json', 'utf8', (err, data) => {
 async function getResults() {
   try {
     var option_a = artists[Math.floor(Math.random() * 2499)], option_b = artists[Math.floor(Math.random() * 2499)];
-    while (option_a == option_b) {
+    while (option_a == option_b) { // ensures they're different artists
       option_b = artists[Math.floor(Math.random() * 2499)];
     }
-    var a = await getArtistInfo(option_a), b = await getArtistInfo(option_b);
-    var higher = (b.followers.total>a.followers.total)*0 + (a.followers.total>b.followers.total)*1;
+    var a = await getArtistInfo(option_a), b = await getArtistInfo(option_b); // gets artist info for two random artists
+    var higher = (b.followers.total>a.followers.total)*0 + (a.followers.total>b.followers.total)*1; // finds which is higher
     return [a, b, higher];
   }
   catch (error) {

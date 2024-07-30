@@ -15,6 +15,18 @@
     }
 }
 
+@keyframes wonGameFlash {
+    0% {
+        background-color: aqua;
+    }
+    50% {
+        background-color: green;
+    }
+    100% {
+        background-color: aqua;
+    }
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -59,8 +71,16 @@ button {
     border-radius: 10px;
 }
 
-.flash {
+button:hover {
+    background-color: beige;
+}
+
+.flashLost {
     animation: lostGameFlash 0.25s ease;
+}
+
+.flashWon {
+    animation: wonGameFlash 0.25s ease;
 }
 
 .fade {
